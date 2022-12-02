@@ -1,0 +1,73 @@
+﻿<div class="question-modal">
+    @*Question Format*@
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="questionformat">Question Format</label>
+            </div>
+            <input type="text" readonly name="questionformat" class="form-control" id="questionformat" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem; background-color:white" value="@Question.QuestionFormat" />
+        </div>
+    </div>
+
+    @*Question Text*@
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="questiontext">Question text</label>
+            </div>
+            <textarea type="text" readonly rows="2" class="form-control" name="questiontext" id="questiontext" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem; background-color:white" value="@Question.Question" />
+        </div>
+    </div>
+
+    @*Is Client Question*@
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="isclient">Is this a Client Question?</label>
+            </div>
+            <input type="text" readonly class="form-control" name="isclient" id="isclient" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem; background-color:white" value="@Question.IsClientQuestion" />
+        </div>
+    </div>
+
+    @*Is Generic Question*@
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="isgeneric">Is this a Generic Question?</label>
+            </div>
+            <input type="text" readonly class="form-control" name="isgeneric" id="isgeneric" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem; background-color:white" value="@Question.IsGenericQuestion" />
+        </div>
+    </div>
+
+    @*Has Further Comment*@
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="furthercomment">Does this question allow further comments?</label>
+            </div>
+            <input type="text" readonly class="form-control" name="furthercomment" id="furthercomment" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem; background-color:white" value="@Question.HasFurtherComment" />
+        </div>
+    </div>
+
+    @*Is SQL Question*@
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="issql">Is this question populated from a SQL Query?</label>
+            </div>
+            <input type="text" readonly class="form-control" name="issql" id="issql" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem; background-color:white" value="@Question.IsSQLQuery" />
+        </div>
+    </div>
+
+    @*SQL Query*@
+    <div class="mb-3" hidden="@Sql">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="sqlquery">SQL Query</label>
+            </div>
+            <textarea type="text" readonly rows="3" class="form-control" name="sqlquery" id="sqlquery" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem; background-color:white" value="@Question.SQLQuery" />
+        </div>
+    </div>
+    <button type="button" class="btn btn-secondary" @onclick="Cancel">Close</button>
+    <button type="button" class="btn btn-danger" @onclick="() => DeleteQuestion()">Delete</button>
+</div>

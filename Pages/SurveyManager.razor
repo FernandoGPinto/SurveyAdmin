@@ -1,0 +1,67 @@
+﻿@page "/surveymanager"
+
+<h1 class="mb-5">Survey Manager</h1>
+
+@if (Clients == null || IsLoading)
+{
+    @*Loading Spinner*@
+    <div class="spinner-border text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+}
+else
+{
+    <div class="mb-3">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="question">Client</label>
+            </div>
+            <select required name="question" class="custom-select" id="question" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem" @bind="SelectedClient" @oninput="(ChangeEventArgs e) => ShowQuestionList(e)">
+                <option value="">Select Client</option>
+                @foreach (var client in Clients)
+                {
+                    <option value="@client.Id">@client.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    if (QuestionAssignments == null)
+    {
+        <p>Please choose a Client...</p>
+    }
+    else
+    {
+        <EditForm Model="@QuestionAssignments" OnValidSubmit="@SaveChanges">
+            <div class="overflow-panel">
+                <table class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th style="text-align: center">Assign</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var questionAssignment in QuestionAssignments)
+                        {
+                            <tr>
+                                <td style="vertical-align: middle">@questionAssignment.Question</td>
+                                <td style="vertical-align: middle; text-align: center">
+                                    @if (questionAssignment.Assigned)
+                                    {
+                                        <input type="checkbox" name="assigned" checked @onchange="@(() => AssignQuestion(questionAssignment))" />
+                                    }
+                                    else
+                                    {
+                                        <input type="checkbox" name="assigned" @onchange="@(() => AssignQuestion(questionAssignment))" />
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <button class="btn btn-primary mt-4" type="submit">Save Changes</button>
+        </EditForm>
+    }
+}

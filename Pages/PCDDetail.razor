@@ -1,0 +1,37 @@
+﻿@page "/pcddetail/{jobId}/{jobNumber}/{name}/{siteName}"
+
+<h1 class="mb-4">PCD Detail</h1>
+
+@if (Responses == null)
+{
+    @*Loading Spinner*@
+    <div class="spinner-border text-warning mt-2" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+}
+else
+{
+    <div class="mb-1"><b>Job:</b> @JobNumber</div>
+    <div class="mb-1"><b>Client:</b> @Name</div>
+    <div><b>Site:</b> @SiteName</div>
+    
+    <div class="overflow-panel">
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Response</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var response in Responses)
+                {
+                    <tr>
+                        <td style="vertical-align: middle">@response.Question</td>
+                        <td style="vertical-align: middle">@response.Response</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

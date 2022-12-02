@@ -1,0 +1,144 @@
+﻿@page "/dashboard"
+
+<h1 class="mb-5">PCD Dashboard</h1>
+
+@if (Clients == null)
+{
+    @*Loading Spinner*@
+    <div class="spinner-border text-warning mt-2" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+}
+else
+{
+    <EditForm class="mb-4" Model="@SearchParameters" OnValidSubmit="@Search">
+        <div class="mb-1">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="question">Client</label>
+                </div>
+                <InputSelect required class="custom-select" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem" @bind-Value="SearchParameters.ClientId">
+                    <option value="">Please Select a Customer</option>
+                    @foreach (var client in Clients)
+                        {
+                        <option value="@client.Id">@client.Name</option>
+                        }
+                </InputSelect>
+            </div>
+        </div>
+        <div class="mb-1">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="question">Date From</label>
+                </div>
+                <InputDate required class="form-control" @bind-Value="SearchParameters.DateFrom"></InputDate>
+            </div>
+        </div>
+        <div class="mb-1">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="question">Date To</label>
+                </div>
+                <InputDate required class="form-control" @bind-Value="SearchParameters.DateTo"></InputDate>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col text-center mt-1">
+                <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
+                    <i class="fas fa-search fa-sm text-white-50"></i>
+                    Search
+                </button>
+                <button type="reset" class="d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm">
+                    <i class="fas fa-undo-alt fa-sm text-white-50"></i>
+                    Clear
+                </button>
+            </div>
+        </div>
+    </EditForm>
+
+    if (Responses is null)
+    {
+        <p>Please select your search criteria...</p>
+    }
+    else if (Responses.Count == 0)
+    {
+        <p>No records found for your search criteria.</p>
+    }
+    else if (IsLoading)
+    {
+        @*Loading Spinner*@
+        <div class="spinner-border text-warning mt-2" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    }
+    else
+    {
+        <div class="row" id="table">
+            <div class="col-12 ">
+                <div class="card shadow-sm">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 "><i class="fas fa-table cardicon"></i>Surveys</h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="PCDTable" class="display compact cell-border">
+                            <thead>
+                                <tr>
+                                    <th>Job Number</th>
+                                    <th>Date Submitted</th>
+                                    <th>Name</th>
+                                    <th>Site Name</th>
+                                    <th>Count Manager</th>
+                                    <th>Productivity</th>
+                                    <th>Final Finish</th>
+                                    <th>Sales Floor Length</th>
+                                    <th>Gross Accuracy %</th>
+                                    <th>Time Keeping</th>
+                                    <th>Dress Code</th>
+                                    <th>Equipment</th>
+                                    <th>Procedures</th>
+                                    <th>Communication</th>
+                                    <th>Accuracy</th>
+                                    <th>Tidiness</th>
+                                    <th>Wrap-Up</th>
+                                    <th>Overall Perception</th>
+                                    <th>Store Comment</th>
+                                    <th>Details</th>
+                                    <th>Export</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var response in Responses)
+                                {
+                                    <tr>
+                                        <td style="vertical-align: middle">@response.JobNumber</td>
+                                        <td style="vertical-align: middle">@response.DateTimeSubmittedUTC</td>
+                                        <td style="vertical-align: middle">@response.Name</td>
+                                        <td style="vertical-align: middle">@response.SiteName</td>
+                                        <td style="vertical-align: middle">@response.CountManager</td>
+                                        <td style="vertical-align: middle">@response.Productivity</td>
+                                        <td style="vertical-align: middle">@response.FinalFinish</td>
+                                        <td style="vertical-align: middle">@response.SalesFloorLength</td>
+                                        <td style="vertical-align: middle">@response.GrossAccuracy</td>
+                                        <td style="vertical-align: middle">@response.TimeKeeping</td>
+                                        <td style="vertical-align: middle">@response.DressCode</td>
+                                        <td style="vertical-align: middle">@response.Equipment</td>
+                                        <td style="vertical-align: middle">@response.Procedures</td>
+                                        <td style="vertical-align: middle">@response.Communication</td>
+                                        <td style="vertical-align: middle">@response.Accuracy</td>
+                                        <td style="vertical-align: middle">@response.Tidiness</td>
+                                        <td style="vertical-align: middle">@response.WrapUp</td>
+                                        <td style="vertical-align: middle">@response.OverallPerception</td>
+                                        <td style="vertical-align: middle">@response.StoreComment</td>
+                                        <td class="dt-center" style="vertical-align: middle"><a href="pcddetail/@response.Id/@response.JobNumber/@response.Name/@response.SiteName"><i class="far fa-chart-bar"></i></a></td>
+                                        <td class="dt-center" style="vertical-align: middle"><a class="anchorstyle" @onclick="() => Export(response)"><i class="fas fa-file-pdf"></i></a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

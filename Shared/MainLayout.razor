@@ -1,0 +1,38 @@
+﻿@inherits LayoutComponentBase
+
+<AuthorizeView>
+    <Authorized>
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div style="background: #373839;">
+                <NavMenu />
+            </div>
+            <div id="content-wrapper" class="d-flex flex-column">
+                <div id="content">
+                    <!-- Topbar -->
+                    <nav class="navbar navbar-expand navbar-light bg-white topbar static-top shadow">
+                    </nav>
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid pt-4 pb-4">
+                        @Body
+                    </div>
+                </div>
+                <!-- Footer -->
+                <footer class="sticky-footer bg-white">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                            <span>&copy; 2021 - Retail &amp; Asset Solutions - <a href="https://asginfo.retailassetsolutions.com/">Privacy</a></span>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <div class="main">
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>

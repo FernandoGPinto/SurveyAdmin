@@ -1,0 +1,53 @@
+﻿@page "/questionmanager"
+
+<h1 class="mb-5">Question Manager</h1>
+
+@if (Questions == null)
+{
+    @*Loading Spinner*@
+    <div class="spinner-border text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+}
+else
+{
+    <div class="d-flex">
+        <button class="btn btn-success mr-2" @onclick="() => NewQuestion()">New Question</button>
+        <AuthorizeView Policy="RequireReorderQuestionsRole">
+            <a class="btn btn-primary" href="/questionorder">Reorder Questions</a>
+        </AuthorizeView>
+    </div>
+
+    <div class="overflow-panel">
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Format</th>
+                    <th>Generic</th>
+                    <th>Client</th>
+                    <th>SQL</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var question in Questions)
+                {
+                    <tr>
+                        <td style="vertical-align: middle">@question.Question</td>
+                        <td style="vertical-align: middle">@question.QuestionFormat</td>
+                        <td style="vertical-align: middle">@question.IsGenericQuestion</td>
+                        <td style="vertical-align: middle">@question.IsClientQuestion</td>
+                        <td style="vertical-align: middle">@question.IsSQLQuery</td>
+                        <td style="vertical-align: middle; min-width: 85px">
+                            <div class="d-flex">
+                                <button class="btn btn-info mr-1" @onclick="() => EditQuestion(question)">Edit</button>
+                                <button class="btn btn-primary" @onclick="() => QuestionDetail(question)">Detail</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

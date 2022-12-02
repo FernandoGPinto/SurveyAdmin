@@ -1,0 +1,124 @@
+﻿@using SurveyAdmin.Enums
+
+@if (Question == null)
+{
+    @*Loading Spinner*@
+    <div class="spinner-border text-warning" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+}
+else
+{
+    <EditForm Model="Question" OnValidSubmit="@SubmitQuestion" class="was-validated">
+        <fieldset>
+            <div class="question-modal mb-2">
+                @*Question Format*@
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="questionformat">Question Format</label>
+                        </div>
+                        <InputSelect required name="questionformat" class="custom-select" id="questionformat" @bind-Value="Question.QuestionFormat" style="border-top-right-radius:.25rem; border-bottom-right-radius:.25rem">
+                            <option value="">Select Question Format</option>
+                            @foreach (string value in EnumExtensionMethods.GetEnumDescriptions(typeof(PCDQuestionFormats)))
+                                {
+                                <option value="@value">@value</option>
+                                }
+                        </InputSelect>
+                        <div class="invalid-feedback">Please select a Format.</div>
+                    </div>
+                </div>
+
+                @*Question Text*@
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="questiontext">Question text</label>
+                        </div>
+                        <InputTextArea required rows="2" class="form-control" name="questiontext" id="questiontext" @bind-Value="Question.Question" placeholder="Enter the question to be asked"></InputTextArea>
+                        <div class="invalid-feedback">Please enter the Question.</div>
+                    </div>
+                </div>
+
+                @*Is Client Question*@
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="isclient">Is this a Client Question?</label>
+                        </div>
+                        <InputSelect required class="custom-select" name="isclient" id="isclient" @bind-Value="Question.IsClientQuestion">
+                            <option value="">Select Answer (Yes/No)</option>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                        </InputSelect>
+                        <div class="invalid-feedback">Please select the Answer.</div>
+                    </div>
+                </div>
+
+                @*Is Generic Question*@
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="isgeneric">Is this a Generic Question?</label>
+                        </div>
+                        <InputSelect required class="custom-select" name="isgeneric" id="isgeneric" @bind-Value="Question.IsGenericQuestion">
+                            <option value="">Select Answer (Yes/No)</option>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                        </InputSelect>
+                        <div class="invalid-feedback">Please select the Answer.</div>
+                    </div>
+                </div>
+
+                @*Has Further Comment*@
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="furthercomment">Does this question allow further comments?</label>
+                        </div>
+                        <InputSelect required class="custom-select" name="furthercomment" id="furthercomment" @bind-Value="Question.HasFurtherComment">
+                            <option value="">Select Answer (Yes/No)</option>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                        </InputSelect>
+                        <div class="invalid-feedback">Please select the Answer.</div>
+                    </div>
+                </div>
+
+                @*Is SQL Question*@
+                <div class="mb-3">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="issql">Is this question populated from a SQL Query?</label>
+                        </div>
+                        <InputSelect required class="custom-select" name="issql" id="issql" @bind-Value="Question.IsSQLQuery" @oninput="(ChangeEventArgs e) => ShowSql(e)">
+                            <option value="">Select Answer (Yes/No)</option>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                        </InputSelect>
+                        <div class="invalid-feedback">Please select the Answer.</div>
+                    </div>
+                </div>
+
+                @*SQL Query*@
+                <div class="mb-3" hidden="@Sql">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="sqlquery">SQL Query</label>
+                        </div>
+                        <InputTextArea rows="3" class="form-control" name="sqlquery" id="sqlquery" @bind-Value="Question.SQLQuery" placeholder="Enter the sql query that will auto populate this question"></InputTextArea>
+                        <div class="invalid-feedback">Please select the Answer.</div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" value="Submit" id="submitButton" class="btn btn-primary">
+                @if (IsLoading)
+                {
+                    <span class="spinner-border spinner-border-sm mr-1"></span>
+                }
+                Submit
+            </button>
+        </fieldset>
+    </EditForm>
+}

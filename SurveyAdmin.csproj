@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>13603aa7-49b8-4b2a-b34a-de125394a27e</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.Modal" Version="6.0.1" />
+    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.0.1" />
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.9" />
+    <PackageReference Include="NPOI" Version="2.5.4" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.6.0" />
+  </ItemGroup>
+
+</Project>

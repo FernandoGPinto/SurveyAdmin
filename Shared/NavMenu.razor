@@ -1,0 +1,77 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<div @onclick="ToggleNavMenu">
+    <ul class="navbar-nav sidestyle sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" asp-area="" asp-page="/">
+            <img src="/img/stlogo.png" class="sidebar-brand-text logo-large" id="Logo" />
+            <img src="/img/logo.png" class="sidebar-brand-small logo-small" />
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+
+        <li class="nav-item active">
+            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                <i class="fas fa-fw fa-home"></i><span>Home</span>
+            </NavLink>
+        </li>
+
+        <AuthorizeView>
+            <Authorized>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="questionmanager" style="padding-top: 0.8rem; padding-bottom: 0.8rem;">
+                        <i class="fas fa-fw fa-clipboard-list"></i><span>Question Manager</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="surveymanager" style="padding-top: 0.8rem; padding-bottom: 0.8rem;">
+                        <i class="fas fa-fw fa-tasks"></i><span>Survey Manager</span>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="dashboard" style="padding-top: 0.8rem; padding-bottom: 0.8rem;">
+                        <i class="fas fa-tachometer-alt"></i><span>Dashboard</span>
+                    </NavLink>
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider mt-3 mb-0">
+
+                <li class="nav-item">
+                    @*<NavLink class="nav-link">*@
+                    <form method="post" action="/Account/Logout">
+                        <button id="logout-button" class="nav-link" type="submit" style="width:100%">
+                            <i class="fa fa-fw fa-sign-out-alt"></i><span>Logout</span>
+                        </button>
+                    </form>
+                    @*</NavLink>*@
+                </li>
+
+                <!-- Divider -->
+                <hr class="sidebar-divider">
+            </Authorized>
+            <NotAuthorized>
+                @*NOT CURRENTLY IN USE*@
+                @*<li class="nav-item">
+                        <NavLink class="nav-link" href="/Account/Login?redirectUri=/">
+                            <i class="fa fa-sign-in-alt"></i><span>Login</span>
+                        </NavLink>
+                    </li>*@
+            </NotAuthorized>
+        </AuthorizeView>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
